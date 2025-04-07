@@ -45,7 +45,11 @@ const signup = () => {
 
 <template>
   <div class="stock-container">
+    <div class="animated-bg"></div>
+    
     <div class="stock-card">
+      <div class="card-decoration"></div>
+      
       <div class="logo-area">
         <h2 class="stock-title">Stock Market</h2>
         <p class="subtitle">Welcome back!</p>
@@ -55,6 +59,7 @@ const signup = () => {
         <div class="stock-group">
           <label for="player-id">ID</label>
           <div class="input-container">
+            <span class="input-icon">👤</span>
             <input 
               id="player-id"
               type="text" 
@@ -67,6 +72,7 @@ const signup = () => {
         <div class="stock-group">
           <label for="player-pw">Password</label>
           <div class="input-container">
+            <span class="input-icon">🔒</span>
             <input 
               id="player-pw"
               type="password" 
@@ -76,22 +82,15 @@ const signup = () => {
           </div>
         </div>
         
-        <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
+        <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
         
         <button 
           type="submit" 
-          class="signin-btn" 
+          class="signin-btn pulse" 
           :disabled="isLoading">
           {{ isLoading ? '로그인 중...' : '로그인' }}
         </button>
-        
-        <div class="action-links">
-            <router-link to="/findpw" class="forgot-link">비밀번호를 잊으셨나요?</router-link>
-        </div>
 
-        <div class="action-links">
-            <router-link to="/findconfirmation" class="forgot-link">확인 문자를 잊으셨나요?</router-link>
-        </div>
       </form>
       
       <div class="signup-area">
@@ -99,42 +98,198 @@ const signup = () => {
         <button class="signup-btn" @click="signup">회원가입</button>
       </div>
     </div>
+    
+    <div class="particles-container">
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+    </div>
   </div>
 </template>
 
 <style scoped>
+/* 공통 스타일 시작 */
 .stock-container {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
   font-family: 'Noto Sans KR', sans-serif;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4ecfb 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+/* 애니메이션 배경 */
+.animated-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  background: white;
+  border-radius: 30%;
+  z-index: -1;
+}
+
+.animated-bg::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  right: -50%;
+  bottom: -50%;
+  background: radial-gradient(circle, rgb(255, 255, 255) 0%, rgba(49, 130, 206, 0) 70%);
+  animation: pulse-bg 15s infinite;
+}
+
+@keyframes pulse-bg {
+  0% { transform: scale(1); opacity: 0.5; }
+  50% { transform: scale(1.2); opacity: 0.3; }
+  100% { transform: scale(1); opacity: 0.5; }
+}
+
+/* 파티클 효과 */
+.particles-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: -1;
+}
+
+.particle {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: rgba(66, 153, 225, 0.3);
+  border-radius: 50%;
+  z-index: -1;
+}
+
+.particle:nth-child(1) {
+  top: 10%;
+  left: 20%;
+  animation: float 25s infinite linear;
+}
+
+.particle:nth-child(2) {
+  top: 30%;
+  left: 80%;
+  animation: float 20s infinite linear;
+  width: 12px;
+  height: 12px;
+}
+
+.particle:nth-child(3) {
+  top: 70%;
+  left: 15%;
+  animation: float 22s infinite linear;
+  width: 10px;
+  height: 10px;
+}
+
+.particle:nth-child(4) {
+  top: 40%;
+  left: 90%;
+  animation: float 18s infinite linear;
+  width: 6px;
+  height: 6px;
+}
+
+.particle:nth-child(5) {
+  top: 85%;
+  left: 60%;
+  animation: float 24s infinite linear;
+  width: 14px;
+  height: 14px;
+}
+
+@keyframes float {
+  0% { transform: translate(0, 0) rotate(0deg); opacity: 0.3; }
+  25% { transform: translate(-100px, 100px) rotate(90deg); opacity: 0.7; }
+  50% { transform: translate(100px, 200px) rotate(180deg); opacity: 0.3; }
+  75% { transform: translate(200px, -100px) rotate(270deg); opacity: 0.7; }
+  100% { transform: translate(0, 0) rotate(360deg); opacity: 0.3; }
 }
 
 .stock-card {
-  background: white;
-  padding: 2.5rem;
-  border-radius: 16px;
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0 15px 35px rgba(49, 130, 206, 0.15);
+  padding: 40px;
   width: 100%;
-  max-width: 400px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-  text-align: center;
+  max-width: 450px;
+  margin: 0 auto;
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.stock-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(49, 130, 206, 0.2);
+}
+
+.card-decoration {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 150px;
+  height: 150px;
+  background: linear-gradient(135deg, rgba(49, 130, 206, 0.1), rgba(66, 153, 225, 0.05));
+  border-radius: 0 0 0 100%;
+  z-index: -1;
+}
+
+.card-decoration::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100px;
+  height: 100px;
+  background: linear-gradient(135deg, rgba(49, 130, 206, 0.05), rgba(66, 153, 225, 0.02));
+  border-radius: 100% 0 0 0;
 }
 
 .logo-area {
-  margin-bottom: 2rem;
+  margin-bottom: 30px;
+  text-align: center;
 }
 
 .stock-title {
-  font-size: 28px;
-  color: #1a56db;
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  background: linear-gradient(45deg, #2b6cb0, #4299e1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 4px 8px rgba(66, 153, 225, 0.2);
   font-weight: 700;
-  margin-bottom: 0.5rem;
+  position: relative;
+}
+
+.stock-title::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 4px;
+  background: linear-gradient(90deg, #2b6cb0, #4299e1);
+  border-radius: 2px;
 }
 
 .subtitle {
-  color: #6b7280;
-  font-size: 16px;
+  font-size: 1.2rem;
+  color: #4a5568;
+  margin-top: 10px;
 }
 
 .login-form {
@@ -142,16 +297,20 @@ const signup = () => {
 }
 
 .stock-group {
-  margin-bottom: 1.25rem;
-  text-align: left;
+  margin-bottom: 28px;
 }
 
 .stock-group label {
   display: block;
-  font-size: 14px;
-  color: #4b5563;
-  margin-bottom: 0.5rem;
-  font-weight: 500;
+  margin-bottom: 10px;
+  font-weight: 600;
+  color: #2d3748;
+  font-size: 1rem;
+  transition: color 0.3s;
+}
+
+.stock-group:hover label {
+  color: #4299e1;
 }
 
 .input-container {
@@ -160,19 +319,28 @@ const signup = () => {
   align-items: center;
 }
 
+.input-icon {
+  position: absolute;
+  left: 16px;
+  font-size: 1.2rem;
+}
+
 .stock-group input {
   width: 100%;
-  padding: 12px 12px 12px 40px;
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  font-size: 15px;
-  outline: none;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  padding: 14px 16px 14px 46px;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  font-size: 16px;
+  transition: all 0.3s;
+  background-color: #f8fafc;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .stock-group input:focus {
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+  outline: none;
+  border-color: #4299e1;
+  box-shadow: 0 0 0 4px rgba(66, 153, 225, 0.2), inset 0 2px 4px rgba(0, 0, 0, 0);
+  background-color: white;
 }
 
 .stock-group input::placeholder {
@@ -180,33 +348,106 @@ const signup = () => {
 }
 
 .error-message {
-  color: #dc2626;
-  font-size: 14px;
-  text-align: left;
-  margin-bottom: 1rem;
+  color: #e53e3e;
+  margin-bottom: 24px;
+  font-size: 0.95rem;
+  padding: 12px 16px;
+  background-color: rgba(229, 62, 62, 0.1);
+  border-radius: 10px;
+  border-left: 4px solid #e53e3e;
+  animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+@keyframes shake {
+  10%, 90% { transform: translate3d(-1px, 0, 0); }
+  20%, 80% { transform: translate3d(2px, 0, 0); }
+  30%, 50%, 70% { transform: translate3d(-3px, 0, 0); }
+  40%, 60% { transform: translate3d(3px, 0, 0); }
+}
+
+.signin-btn, .signup-btn {
+  width: 100%;
+  padding: 16px;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s;
+  margin-bottom: 16px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  position: relative;
+  overflow: hidden;
 }
 
 .signin-btn {
-  width: 100%;
-  padding: 12px;
-  background: #1a56db;
+  background: linear-gradient(45deg, #2b6cb0, #4299e1);
   color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.3s;
-  margin-bottom: 1rem;
+  box-shadow: 0 6px 15px rgba(66, 153, 225, 0.3);
+}
+
+.signup-btn {
+  background: white;
+  color: #1a56db;
+  border: 2px solid #4299e1;
+  box-shadow: 0 4px 10px rgba(66, 153, 225, 0.2);
+}
+
+.signin-btn::before, .signup-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: all 0.5s;
 }
 
 .signin-btn:hover {
-  background: #1e40af;
+  background: linear-gradient(45deg, #2c5282, #3182ce);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(66, 153, 225, 0.4);
+}
+
+.signup-btn:hover {
+  background: #eef2ff;
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(66, 153, 225, 0.3);
+}
+
+.signin-btn:hover::before, .signup-btn:hover::before {
+  left: 100%;
+}
+
+.signin-btn:active, .signup-btn:active {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(66, 153, 225, 0.3);
 }
 
 .signin-btn:disabled {
-  background: #93c5fd;
+  background: linear-gradient(45deg, #a0aec0, #cbd5e0);
+  color: #f8fafc;
   cursor: not-allowed;
+  transform: none;
+  box-shadow: 0 4px 10px rgba(160, 174, 192, 0.2);
+}
+
+.pulse {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(66, 153, 225, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(66, 153, 225, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(66, 153, 225, 0);
+  }
 }
 
 .action-links {
@@ -238,27 +479,28 @@ const signup = () => {
   margin-bottom: 0.75rem;
 }
 
-.signup-btn {
-  width: 100%;
-  padding: 12px;
-  background: white;
-  color: #1a56db;
-  border: 1px solid #1a56db;
-  border-radius: 8px;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s;
-}
-
-.signup-btn:hover {
-  background: #eef2ff;
+@media (max-width: 768px) {
+  .stock-title {
+    font-size: 2.2rem;
+  }
+  
+  .stock-card {
+    padding: 30px;
+  }
 }
 
 @media (max-width: 480px) {
   .stock-card {
     max-width: 90%;
-    padding: 1.5rem;
+    padding: 25px;
+  }
+  
+  .stock-title {
+    font-size: 1.9rem;
+  }
+  
+  .subtitle {
+    font-size: 1rem;
   }
 }
 </style>
