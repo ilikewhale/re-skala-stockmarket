@@ -202,6 +202,210 @@ onMounted(() => {
 }
 </style> -->
 
+<!-- <script setup lang="ts">
+import AllStocks from './AllStocks.vue';
+import { useRoute } from 'vue-router';
+import StockTrading from './StockTrading.vue';
+import { useRouter } from 'vue-router'
+import { ref, onMounted, computed } from 'vue';
+import axios from 'axios';
+
+const router = useRouter()
+const route = useRoute();
+const playerId = route.query.playerId as string | '';
+const player = ref<Player | null>(null);
+
+interface Player {
+  id: number;
+  playerId: string;
+  playerPw: string;
+  confirmation: string;
+  playerMoney: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+const fetchPlayerInfo = async () => {
+  try {
+    const res = await axios.get(`/api/player/${playerId}`)
+    player.value = res.data
+  } catch (err) {
+    console.error('유저 정보 불러오기 실패:', err)
+  }
+}
+
+const formattedMoney = computed(() => {
+  if (!player.value || player.value.playerMoney === undefined) return '₩0';
+  return new Intl.NumberFormat('ko-KR', {
+    style: 'currency',
+    currency: 'KRW',
+    maximumFractionDigits: 0
+  }).format(player.value?.playerMoney);
+});
+
+const logout = () => {
+  router.push('/')
+}
+
+onMounted(() => {
+  fetchPlayerInfo()
+})
+</script>
+
+<template>
+  <div class="stock-market-container">
+    <header class="market-header">
+      <div class="header-content">
+        <h1>Skala Stock Market</h1>
+        <div class="player-money">
+          <div class="player-info">Player: {{ playerId }}</div>
+          <div class="money-info">Money: {{ formattedMoney }}</div>
+        </div>
+        <div class="button-group">
+          <button class="logout-button" @click="logout">로그아웃</button>
+          <router-link :to="{ path: '/transactions', query: { playerId } }" class="transaction-btn">
+            거래 내역 보기
+          </router-link>
+        </div>
+      </div>
+    </header>
+    
+    <div class="market-content">
+      <section class="stocks-section">
+        <AllStocks />
+      </section>
+      
+      <section class="trading-section">
+        <StockTrading :playerId="playerId" @update-player="fetchPlayerInfo" />
+      </section>
+    </div>
+  </div>
+</template>
+
+<style scoped>
+.stock-market-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.market-header {
+  margin-bottom: 20px;
+  text-align: left;
+  background-color: #1a56db;
+  padding: 15px 20px;
+  border-radius: 12px;
+  color: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.market-header h1 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.player-money {
+  display: flex;
+  gap: 40px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.market-content {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+  height: calc(100vh - 100px);
+}
+
+.stocks-section,
+.trading-section {
+  background-color: white;
+  border-radius: 12px;
+  padding: 20px;
+  flex: 1;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  height: 100%;
+}
+
+.button-group {
+  display: flex;
+  gap: 8px;
+}
+
+.transaction-btn {
+  background-color: #7239af;
+  color: white;
+  padding: 8px 12px;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 14px;
+  transition: background-color 0.3s;
+  white-space: nowrap;
+}
+
+.transaction-btn:hover {
+  background-color: #8a4fd3;
+}
+
+.logout-button {
+  background-color: #f0f0f0;
+  color: #333;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+.logout-button:hover {
+  background-color: #e0e0e0;
+}
+
+/* 데스크탑에서 50%씩 배분 */
+@media (min-width: 768px) {
+  .stocks-section,
+  .trading-section {
+    flex: 1;
+  }
+}
+
+/* 모바일 최적화 */
+@media (max-width: 767px) {
+  .market-content {
+    flex-direction: column;
+    height: auto;
+  }
+  
+  .header-content {
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  
+  .player-money {
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  .button-group {
+    width: 100%;
+    justify-content: flex-end;
+  }
+}
+</style> -->
+
 <script setup lang="ts">
 import AllStocks from './AllStocks.vue';
 import { useRoute } from 'vue-router';
